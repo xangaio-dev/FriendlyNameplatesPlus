@@ -70,7 +70,7 @@ FriendlyNameplatesPlus dynamically adjusts the visibility of friendly player and
 **v12.0.1**  
 - Replaced map-based city detection with IsResting() for reliable, maintenance-free behavior across all hubs
 - Removed dependence on map IDs and C_Map.IsCityMap
-- Improved debug safety and code readability
+- Improved debug safety and code readability 
 
 **v12.0.0**  
 - ✅ Compatible with **Midnight Expansion**  
