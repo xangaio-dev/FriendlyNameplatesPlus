@@ -122,7 +122,9 @@ f:SetScript("OnEvent", function(self, event, ...)
             EvaluateState()
         end
 
-    elseif event == "PLAYER_ENTERING_WORLD" or event == "ZONE_CHANGED_NEW_AREA" then
+    elseif event == "PLAYER_ENTERING_WORLD"
+        or event == "ZONE_CHANGED_NEW_AREA"
+        or event == "UPDATE_EXHAUSTION" then
         EvaluateState()
 
     elseif event == "PLAYER_REGEN_ENABLED" then
@@ -140,6 +142,7 @@ f:RegisterEvent("ADDON_LOADED")
 f:RegisterEvent("PLAYER_ENTERING_WORLD")
 f:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 f:RegisterEvent("PLAYER_REGEN_ENABLED")
+f:RegisterEvent("UPDATE_EXHAUSTION")
 
 -- Slash command print functions
 local function PrintHelp()
