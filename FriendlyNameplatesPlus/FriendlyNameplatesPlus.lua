@@ -12,26 +12,8 @@ local defaults = {
 }
 
 local function Debug(msg)
-    if FriendlyNameplatesPlusDB.debugEnabled then
+    if FriendlyNameplatesPlusDB and FriendlyNameplatesPlusDB.debugEnabled then
         DEFAULT_CHAT_FRAME:AddMessage("|cff00ff00FNP:|r " .. msg)
-    end
-end
-
-local cityMapIDs = {} -- will be auto-populated
-
--- Dynamically build a list of capital city map IDs
-local function BuildCityMapList()
-    cityMapIDs = {} -- reset
-    -- Start from the world map (mapID = 946 for Eastern Kingdoms, 947 for Kalimdor)
-    local continents = {946, 947}
-    for _, continentID in ipairs(continents) do
-        local maps = C_Map.GetMapChildrenInfo(continentID, nil, true)
-        for _, map in ipairs(maps) do
-            -- Include maps flagged as cities
-            if C_Map.IsCityMap(map.mapID) then
-                cityMapIDs[#cityMapIDs + 1] = map.mapID
-            end
-        end
     end
 end
 
@@ -46,24 +28,11 @@ local function InitDB()
         end
     end
 
-    BuildCityMapList() -- populate city map IDs dynamically
-    Debug("DB initialized with city map IDs: " .. table.concat(cityMapIDs, ", "))
+    Debug("DB initialized")
 end
 
 local function IsPlayerInCity()
-    local mapID = C_Map.GetBestMapForUnit("player")
-    while mapID and mapID ~= 0 do
-        if C_Map.IsCityMap(mapID) then
-            return true
-        end
-        for _, id in ipairs(cityMapIDs) do
-            if mapID == id then
-                return true
-            end
-        end
-        mapID = (C_Map.GetMapInfo(mapID) or {}).parentMapID
-    end
-    return false
+    return IsResting()
 end
 
 -- Optimized SetFriendlyPlates
@@ -197,11 +166,13 @@ local function PrintCurrentSettings()
 end
 
 local function GetCurrentRule()
-
     if not FriendlyNameplatesPlusDB.enabled then
         return DEFAULT_CHAT_FRAME:AddMessage("|cff00ff00FNP:|r Addon disabled")
     end
 
+    local mapID = C_Map.GetBestMapForUnit("player")
+    local mapInfo = C_Map.GetMapInfo(mapID) or {}
+    local zoneName = mapInfo.name or "Unknown"
     local inCity = IsPlayerInCity()
     local _, instanceType = GetInstanceInfo()
     local msg
@@ -216,10 +187,13 @@ local function GetCurrentRule()
         msg = "World rule"
     end
 
-    local current = (GetCVar("nameplateShowFriendlyPlayers") == "1") and "true" or "false"
-    msg = msg .. " - Show Nameplates (" .. current .. ")"
+    local current = (GetCVar("nameplateShowFriendlyPlayers") == "1") and "true" or "false" 
 
-    return DEFAULT_CHAT_FRAME:AddMessage("|cff00ff00FNP:|r " .. msg)
+    -- zone name and map ID & current rule
+    DEFAULT_CHAT_FRAME:AddMessage("|cff00ff00FNP:|r " .. "Zone: " .. zoneName .. " (" .. tostring(mapID) .. ") | " .. msg)
+
+    -- current flag
+    DEFAULT_CHAT_FRAME:AddMessage("|cff00ff00FNP:|r Show Nameplates (" .. current .. ")")
 end
 
 
