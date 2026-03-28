@@ -2,7 +2,7 @@
 ## Title: FriendlyNameplatesPlus
 ## Notes: Toggles friendly nameplates automatically
 ## Author: Xangaio
-## Version: 12.0.1
+## Version: 12.0.2
 ## IconTexture: Interface\AddOns\FriendlyNameplatesPlus\media\icon
 ## SavedVariables: FriendlyNameplatesPlusDB
 ## Category: Nameplates

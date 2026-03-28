@@ -1,4 +1,4 @@
-# FriendlyNameplatesPlus v12.0.1
+# FriendlyNameplatesPlus v12.0.2
 
 **Automatically shows or hides friendly nameplates based on your location, instance type, or special scenarios in World of Warcraft.**  
 FriendlyNameplatesPlus dynamically adjusts the visibility of friendly player and minion nameplates according to your settings and current map/instance.
@@ -66,6 +66,8 @@ FriendlyNameplatesPlus dynamically adjusts the visibility of friendly player and
 ---
 
 ## Release Notes
+**v12.0.2** 
+- Fixed an issue where friendly nameplates were not updating correctly after leaving combat
 
 **v12.0.1**  
 - Replaced map-based city detection with IsResting() for reliable, maintenance-free behavior across all hubs

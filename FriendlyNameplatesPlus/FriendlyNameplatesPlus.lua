@@ -128,10 +128,10 @@ f:SetScript("OnEvent", function(self, event, ...)
         EvaluateState()
 
     elseif event == "PLAYER_REGEN_ENABLED" then
-        if FNP.pendingState ~= nil then
-            Debug("Applying pending state")
-            SetFriendlyPlates(FNP.pendingState)
-            FNP.pendingState = nil
+    if FNP.pendingState ~= nil then
+        Debug("Applying pending state")
+        SetFriendlyPlates(FNP.pendingState.state, FNP.pendingState.inDelve)
+        FNP.pendingState = nil
         else
             EvaluateState()
         end
